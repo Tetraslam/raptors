@@ -1,0 +1,9 @@
+targets:
+  - ip: "192.168.56.101"
+    hostname: "Metasploitable-2"
+scanning:
+  ports: [22, 80, 443]
+  services: true
+  vulnerabilities: true
+output:
+  report_path: "./reports/"
