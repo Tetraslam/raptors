@@ -1,0 +1,22 @@
+RAPTORS VULNERABILITY SCAN REPORT
+================================
+Scan ID: 20241121_192852
+Target: localhost
+Timestamp: 2024-11-21 19:28:52.664864
+Duration: 11.76 seconds
+
+SUMMARY
+-------
+Total Ports Scanned: 0
+Total Vulnerabilities: 0
+
+Risk Levels:
+- Critical: 0
+- High: 0
+- Medium: 0
+- Low: 0
+
+OPEN PORTS
+----------
+VULNERABILITIES
+---------------

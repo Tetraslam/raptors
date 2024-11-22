@@ -1,0 +1,406 @@
+{
+  "timestamp": "2024-11-22T04:35:49.129109+00:00",
+  "target": "localhost",
+  "scan_duration": 187.912321,
+  "services": [],
+  "os_info": {},
+  "vulnerabilities": [
+    {
+      "name": "CVE-1999-0095",
+      "cve_id": "CVE-1999-0095",
+      "cvss_score": 10.0,
+      "description": "The debug command in Sendmail is enabled, allowing attackers to execute commands as root.",
+      "references": [
+        "http://seclists.org/fulldisclosure/2019/Jun/16",
+        "http://www.openwall.com/lists/oss-security/2019/06/05/4",
+        "http://www.openwall.com/lists/oss-security/2019/06/06/1",
+        "http://www.osvdb.org/195",
+        "http://www.securityfocus.com/bid/1",
+        "http://seclists.org/fulldisclosure/2019/Jun/16",
+        "http://www.openwall.com/lists/oss-security/2019/06/05/4",
+        "http://www.openwall.com/lists/oss-security/2019/06/06/1",
+        "http://www.osvdb.org/195",
+        "http://www.securityfocus.com/bid/1"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-0082",
+      "cve_id": "CVE-1999-0082",
+      "cvss_score": 10.0,
+      "description": "CWD ~root command in ftpd allows root access.",
+      "references": [
+        "http://www.alw.nih.gov/Security/Docs/admin-guide-to-cracking.101.html",
+        "http://www.alw.nih.gov/Security/Docs/admin-guide-to-cracking.101.html"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1471",
+      "cve_id": "CVE-1999-1471",
+      "cvss_score": 7.2,
+      "description": "Buffer overflow in passwd in BSD based operating systems 4.3 and earlier allows local users to gain root privileges by specifying a long shell or GECOS field.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1989-01.html",
+        "http://www.iss.net/security_center/static/7152.php",
+        "http://www.securityfocus.com/bid/4",
+        "http://www.cert.org/advisories/CA-1989-01.html",
+        "http://www.iss.net/security_center/static/7152.php",
+        "http://www.securityfocus.com/bid/4"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1122",
+      "cve_id": "CVE-1999-1122",
+      "cvss_score": 4.6,
+      "description": "Vulnerability in restore in SunOS 4.0.3 and earlier allows local users to gain privileges.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1989-02.html",
+        "http://www.ciac.org/ciac/bulletins/ciac-08.shtml",
+        "http://www.securityfocus.com/bid/3",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/6695",
+        "http://www.cert.org/advisories/CA-1989-02.html",
+        "http://www.ciac.org/ciac/bulletins/ciac-08.shtml",
+        "http://www.securityfocus.com/bid/3",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/6695"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1467",
+      "cve_id": "CVE-1999-1467",
+      "cvss_score": 10.0,
+      "description": "Vulnerability in rcp on SunOS 4.0.x allows remote attackers from trusted hosts to execute arbitrary commands as root, possibly related to the configuration of the nobody user.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1989-07.html",
+        "http://www.securityfocus.com/bid/5",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/3165",
+        "http://www.cert.org/advisories/CA-1989-07.html",
+        "http://www.securityfocus.com/bid/5",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/3165"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1506",
+      "cve_id": "CVE-1999-1506",
+      "cvss_score": 7.5,
+      "description": "Vulnerability in SMI Sendmail 4.0 and earlier, on SunOS up to 4.0.3, allows remote attackers to access user bin.",
+      "references": [
+        "http://www.cert.org/advisories/CA-90.01.sun.sendmail.vulnerability",
+        "http://www.securityfocus.com/bid/6",
+        "http://www.cert.org/advisories/CA-90.01.sun.sendmail.vulnerability",
+        "http://www.securityfocus.com/bid/6"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-0084",
+      "cve_id": "CVE-1999-0084",
+      "cvss_score": 8.4,
+      "description": "Certain NFS servers allow users to use mknod to gain privileges by creating a writable kmem device and setting the UID to 0.",
+      "references": [
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/78",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/78"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-2000-0388",
+      "cve_id": "CVE-2000-0388",
+      "cvss_score": 7.5,
+      "description": "Buffer overflow in FreeBSD libmytinfo library allows local users to execute commands via a long TERMCAP environmental variable.",
+      "references": [
+        "ftp://ftp.freebsd.org/pub/FreeBSD/CERT/advisories/FreeBSD-SA-00%3A17.libmytinfo.asc",
+        "http://www.securityfocus.com/bid/1185",
+        "ftp://ftp.freebsd.org/pub/FreeBSD/CERT/advisories/FreeBSD-SA-00%3A17.libmytinfo.asc",
+        "http://www.securityfocus.com/bid/1185"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-0209",
+      "cve_id": "CVE-1999-0209",
+      "cvss_score": 5.0,
+      "description": "The SunView (SunTools) selection_svc facility allows remote users to read files.",
+      "references": [
+        "http://www.securityfocus.com/bid/8",
+        "http://www.securityfocus.com/bid/8"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1198",
+      "cve_id": "CVE-1999-1198",
+      "cvss_score": 7.2,
+      "description": "BuildDisk program on NeXT systems before 2.0 does not prompt users for the root password, which allows local users to gain root privileges.",
+      "references": [
+        "http://ciac.llnl.gov/ciac/bulletins/b-01.shtml",
+        "http://www.cert.org/advisories/CA-1990-06.html",
+        "http://www.iss.net/security_center/static/7141.php",
+        "http://www.securityfocus.com/bid/11",
+        "http://ciac.llnl.gov/ciac/bulletins/b-01.shtml",
+        "http://www.cert.org/advisories/CA-1990-06.html",
+        "http://www.iss.net/security_center/static/7141.php",
+        "http://www.securityfocus.com/bid/11"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1391",
+      "cve_id": "CVE-1999-1391",
+      "cvss_score": 7.2,
+      "description": "Vulnerability in NeXT 1.0a and 1.0 with publicly accessible printers allows local users to gain privileges via a combination of the npd program and weak directory permissions.",
+      "references": [
+        "http://ciac.llnl.gov/ciac/bulletins/b-01.shtml",
+        "http://www.cert.org/advisories/CA-1990-06.html",
+        "http://www.iss.net/security_center/static/7143.php",
+        "http://www.securityfocus.com/bid/10",
+        "http://ciac.llnl.gov/ciac/bulletins/b-01.shtml",
+        "http://www.cert.org/advisories/CA-1990-06.html",
+        "http://www.iss.net/security_center/static/7143.php",
+        "http://www.securityfocus.com/bid/10"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1392",
+      "cve_id": "CVE-1999-1392",
+      "cvss_score": 7.2,
+      "description": "Vulnerability in restore0.9 installation script in NeXT 1.0a and 1.0 allows local users to gain root privileges.",
+      "references": [
+        "http://ciac.llnl.gov/ciac/bulletins/b-01.shtml",
+        "http://www.cert.org/advisories/CA-1990-06.html",
+        "http://www.iss.net/security_center/static/7144.php",
+        "http://www.securityfocus.com/bid/9",
+        "http://ciac.llnl.gov/ciac/bulletins/b-01.shtml",
+        "http://www.cert.org/advisories/CA-1990-06.html",
+        "http://www.iss.net/security_center/static/7144.php",
+        "http://www.securityfocus.com/bid/9"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1057",
+      "cve_id": "CVE-1999-1057",
+      "cvss_score": 4.6,
+      "description": "VMS 4.0 through 5.3 allows local users to gain privileges via the ANALYZE/PROCESS_DUMP dcl command.",
+      "references": [
+        "http://ciac.llnl.gov/ciac/bulletins/b-04.shtml",
+        "http://www.cert.org/advisories/CA-1990-07.html",
+        "http://www.iss.net/security_center/static/7137.php",
+        "http://www.securityfocus.com/bid/12",
+        "http://ciac.llnl.gov/ciac/bulletins/b-04.shtml",
+        "http://www.cert.org/advisories/CA-1990-07.html",
+        "http://www.iss.net/security_center/static/7137.php",
+        "http://www.securityfocus.com/bid/12"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1554",
+      "cve_id": "CVE-1999-1554",
+      "cvss_score": 2.1,
+      "description": "/usr/sbin/Mail on SGI IRIX 3.3 and 3.3.1 does not properly set the group ID to the group ID of the user who started Mail, which allows local users to read the mail of other users.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1990-08.html",
+        "http://www.iss.net/security_center/static/3164.php",
+        "http://www.securityfocus.com/bid/13",
+        "http://www.cert.org/advisories/CA-1990-08.html",
+        "http://www.iss.net/security_center/static/3164.php",
+        "http://www.securityfocus.com/bid/13"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1197",
+      "cve_id": "CVE-1999-1197",
+      "cvss_score": 7.2,
+      "description": "TIOCCONS in SunOS 4.1.1 does not properly check the permissions of a user who tries to redirect console output and input, which could allow a local user to gain privileges.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1990-12.html",
+        "http://www.iss.net/security_center/static/7140.php",
+        "http://www.securityfocus.com/bid/14",
+        "http://www.cert.org/advisories/CA-1990-12.html",
+        "http://www.iss.net/security_center/static/7140.php",
+        "http://www.securityfocus.com/bid/14"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1115",
+      "cve_id": "CVE-1999-1115",
+      "cvss_score": 7.2,
+      "description": "Vulnerability in the /etc/suid_exec program in HP Apollo Domain/OS sr10.2 and sr10.3 beta, related to the Korn Shell (ksh).",
+      "references": [
+        "http://www.cert.org/advisories/CA-1990-04.html",
+        "http://www.ciac.org/ciac/bulletins/a-30.shtml",
+        "http://www.iss.net/security_center/static/6721.php",
+        "http://www.securityfocus.com/bid/7",
+        "http://www.cert.org/advisories/CA-1990-04.html",
+        "http://www.ciac.org/ciac/bulletins/a-30.shtml",
+        "http://www.iss.net/security_center/static/6721.php",
+        "http://www.securityfocus.com/bid/7"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1258",
+      "cve_id": "CVE-1999-1258",
+      "cvss_score": 5.0,
+      "description": "rpc.pwdauthd in SunOS 4.1.1 and earlier does not properly prevent remote access to the daemon, which allows remote attackers to obtain sensitive system information.",
+      "references": [
+        "http://sunsolve.sun.com/pub-cgi/retrieve.pl?doctype=coll&doc=secbull/102",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/1782",
+        "http://sunsolve.sun.com/pub-cgi/retrieve.pl?doctype=coll&doc=secbull/102",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/1782"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1438",
+      "cve_id": "CVE-1999-1438",
+      "cvss_score": 7.2,
+      "description": "Vulnerability in /bin/mail in SunOS 4.1.1 and earlier allows local users to gain root privileges via certain command line arguments.",
+      "references": [
+        "http://sunsolve.sun.com/pub-cgi/retrieve.pl?doctype=coll&doc=secbull/105",
+        "http://www.cert.org/advisories/CA-91.01a.SunOS.mail.vulnerability",
+        "http://www.securityfocus.com/bid/15",
+        "http://sunsolve.sun.com/pub-cgi/retrieve.pl?doctype=coll&doc=secbull/105",
+        "http://www.cert.org/advisories/CA-91.01a.SunOS.mail.vulnerability",
+        "http://www.securityfocus.com/bid/15"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1211",
+      "cve_id": "CVE-1999-1211",
+      "cvss_score": 7.2,
+      "description": "Vulnerability in in.telnetd in SunOS 4.1.1 and earlier allows local users to gain root privileges.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1991-02.html",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/574",
+        "http://www.cert.org/advisories/CA-1991-02.html",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/574"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    },
+    {
+      "name": "CVE-1999-1212",
+      "cve_id": "CVE-1999-1212",
+      "cvss_score": 7.2,
+      "description": "Vulnerability in in.rlogind in SunOS 4.0.3 and 4.0.3c allows local users to gain root privileges.",
+      "references": [
+        "http://www.cert.org/advisories/CA-1991-02.html",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/574",
+        "http://www.cert.org/advisories/CA-1991-02.html",
+        "https://exchange.xforce.ibmcloud.com/vulnerabilities/574"
+      ],
+      "recommendations": [
+        "Update the affected software to the latest version",
+        "Apply security patches as recommended by the vendor",
+        "Monitor vendor's security advisories"
+      ],
+      "source": "NVD"
+    }
+  ],
+  "risk_score": 7.471621621621624,
+  "raw_data": {},
+  "open_ports": {}
+}

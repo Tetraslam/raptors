@@ -1,0 +1,173 @@
+/* Modern Dark Theme */
+:root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-primary: #00ff00;
+    --accent-secondary: #00cc00;
+    --danger: #ff4444;
+    --warning: #ffbb33;
+    --info: #33b5e5;
+    --success: #00C851;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Cards */
+.card {
+    background-color: var(--bg-secondary);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    padding: 15px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Tables */
+.table {
+    color: var(--text-primary);
+    width: 100%;
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.table td, .table th {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+}
+
+/* Dropdown */
+.Select-control {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--accent-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+.Select-menu-outer {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--accent-primary) !important;
+}
+
+.Select-option {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+.Select-option:hover {
+    background-color: var(--accent-primary) !important;
+    color: var(--bg-primary) !important;
+}
+
+/* Graphs */
+.js-plotly-plot {
+    background-color: transparent !important;
+}
+
+/* Stats */
+.stats-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.stats-card h4 {
+    color: var(--accent-primary);
+    font-size: 24px;
+    margin: 0;
+}
+
+.stats-card p {
+    color: var(--text-secondary);
+    margin: 5px 0 0;
+}
+
+/* Risk Level Indicators */
+.risk-critical {
+    color: var(--danger);
+}
+
+.risk-high {
+    color: var(--warning);
+}
+
+.risk-medium {
+    color: var(--info);
+}
+
+.risk-low {
+    color: var(--success);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scanning-indicator {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        margin-bottom: 15px;
+    }
+    
+    .stats-card h4 {
+        font-size: 20px;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}

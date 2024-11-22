@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raptors Security Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="cyber-theme">
+    <div class="cyber-container">
+        <header class="cyber-header">
+            <div class="logo">
+                <div class="glitch" data-text="RAPTORS">RAPTORS</div>
+                <div class="subtitle">Advanced Security Scanner</div>
+            </div>
+            <div class="scan-controls">
+                <input type="text" id="target-input" placeholder="Enter target host..." class="cyber-input">
+                <button onclick="startScan()" class="cyber-button">
+                    <span class="button-content">INITIATE SCAN</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="cyber-main">
+            <div class="grid-container">
+                <!-- Status Panel -->
+                <div class="panel status-panel">
+                    <div class="panel-header">
+                        <h3>SCAN STATUS</h3>
+                        <div class="status-indicator" id="scan-status">IDLE</div>
+                    </div>
+                    <div class="panel-content" id="status-content">
+                        <div class="cyber-terminal" id="scan-log"></div>
+                    </div>
+                </div>
+
+                <!-- Vulnerability Trends -->
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <h3>VULNERABILITY TRENDS</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div id="vulnerability-trends" class="chart"></div>
+                    </div>
+                </div>
+
+                <!-- Risk Distribution -->
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <h3>RISK DISTRIBUTION</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div id="risk-distribution" class="chart"></div>
+                    </div>
+                </div>
+
+                <!-- Network Map -->
+                <div class="panel chart-panel wide">
+                    <div class="panel-header">
+                        <h3>NETWORK TOPOLOGY</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div id="network-map" class="chart"></div>
+                    </div>
+                </div>
+
+                <!-- Port Analysis -->
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <h3>PORT ANALYSIS</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div id="port-analysis" class="chart"></div>
+                    </div>
+                </div>
+
+                <!-- Service Distribution -->
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <h3>SERVICE DISTRIBUTION</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div id="service-distribution" class="chart"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Scans -->
+                <div class="panel wide">
+                    <div class="panel-header">
+                        <h3>RECENT SCANS</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="recent-scans-grid" id="recent-scans"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let ws = new WebSocket(`ws://${window.location.host}/ws`);
+        let charts = {};
+
+        // Initialize ECharts instances
+        window.onload = function() {
+            charts.vulnerabilityTrends = echarts.init(document.getElementById('vulnerability-trends'));
+            charts.riskDistribution = echarts.init(document.getElementById('risk-distribution'));
+            charts.portAnalysis = echarts.init(document.getElementById('port-analysis'));
+            charts.serviceDistribution = echarts.init(document.getElementById('service-distribution'));
+            
+            // Request initial data
+            ws.send(JSON.stringify({action: "get_reports"}));
+        };
+
+        function startScan() {
+            const target = document.getElementById('target-input').value;
+            if (!target) return;
+
+            document.getElementById('scan-status').textContent = 'SCANNING';
+            document.getElementById('scan-status').className = 'status-indicator scanning';
+            
+            ws.send(JSON.stringify({
+                action: "start_scan",
+                target: target
+            }));
+        }
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === "scan_status") {
+                updateScanStatus(data);
+            } else if (data.type === "visualization_data") {
+                updateVisualizations(data.data);
+            }
+        };
+
+        function updateScanStatus(data) {
+            const statusElement = document.getElementById('scan-status');
+            const logElement = document.getElementById('scan-log');
+
+            // Update status indicator
+            statusElement.textContent = data.status.toUpperCase();
+            statusElement.className = `status-indicator ${data.status.toLowerCase()}`;
+
+            // Add log entry with timestamp and message
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${data.status.toLowerCase()}`;
+            
+            // Format the message based on progress if available
+            let message = data.message || data.status;
+            if (data.progress !== undefined) {
+                const percent = Math.round(data.progress * 100);
+                message += ` (${percent}%)`;
+            }
+            
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            logElement.appendChild(logEntry);
+            logElement.scrollTop = logElement.scrollHeight;
+
+            if (data.status === "completed") {
+                ws.send(JSON.stringify({action: "get_reports"}));
+            }
+        }
+
+        function updateVisualizations(data) {
+            // Update Recent Scans
+            const recentScansElement = document.getElementById('recent-scans');
+            recentScansElement.innerHTML = '';  // Clear existing content
+            
+            // Get the recent scans data
+            const recentScans = data.recent_scans || [];
+            
+            // Create scan cards
+            recentScans.forEach(scan => {
+                const scanDate = new Date(scan.timestamp);
+                const formattedDate = scanDate.toLocaleString();
+                
+                const scanCard = document.createElement('div');
+                scanCard.className = 'scan-card';
+                
+                // Calculate stats
+                const numVulnerabilities = scan.vulnerabilities ? scan.vulnerabilities.length : 0;
+                const numServices = scan.services ? scan.services.length : 0;
+                const riskScore = scan.risk_score || 0;
+                
+                // Set card content
+                scanCard.innerHTML = `
+                    <div class="scan-header">
+                        <h4>${scan.target}</h4>
+                        <span class="scan-date">${formattedDate}</span>
+                    </div>
+                    <div class="scan-stats">
+                        <div class="stat">
+                            <span class="stat-value">${numVulnerabilities}</span>
+                            <span class="stat-label">Vulnerabilities</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">${numServices}</span>
+                            <span class="stat-label">Services</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">${riskScore.toFixed(1)}</span>
+                            <span class="stat-label">Risk Score</span>
+                        </div>
+                    </div>
+                `;
+                
+                recentScansElement.appendChild(scanCard);
+            });
+
+            // Vulnerability Trends
+            const trendOption = {
+                title: { text: 'Vulnerability Trends', textStyle: { color: '#00ff00' } },
+                tooltip: { trigger: 'axis' },
+                xAxis: {
+                    type: 'category',
+                    data: Object.keys(data.vulnerability_trends),
+                    axisLabel: { color: '#00ff00' }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { color: '#00ff00' }
+                },
+                series: [{
+                    data: Object.values(data.vulnerability_trends),
+                    type: 'line',
+                    smooth: true,
+                    lineStyle: { color: '#00ff00' },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: 'rgba(0, 255, 0, 0.5)' },
+                            { offset: 1, color: 'rgba(0, 255, 0, 0)' }
+                        ])
+                    }
+                }]
+            };
+            charts.vulnerabilityTrends.setOption(trendOption);
+
+            // Risk Distribution
+            const riskOption = {
+                title: { text: 'Risk Levels', textStyle: { color: '#00ff00' } },
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    data: Object.entries(data.risk_distribution).map(([name, value]) => ({
+                        name, value,
+                        itemStyle: {
+                            color: name === 'Critical' ? '#ff0000' :
+                                  name === 'High' ? '#ff6b00' :
+                                  name === 'Medium' ? '#ffd700' : '#00ff00'
+                        }
+                    })),
+                    label: {
+                        color: '#00ff00',
+                        formatter: '{b}: {c} ({d}%)'
+                    }
+                }]
+            };
+            charts.riskDistribution.setOption(riskOption);
+
+            // Port Analysis
+            const portOption = {
+                title: { text: 'Port Frequency', textStyle: { color: '#00ff00' } },
+                tooltip: { trigger: 'axis' },
+                xAxis: {
+                    type: 'category',
+                    data: Object.keys(data.port_frequency),
+                    axisLabel: { color: '#00ff00' }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: { color: '#00ff00' }
+                },
+                series: [{
+                    data: Object.values(data.port_frequency),
+                    type: 'bar',
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: '#00ff00' },
+                            { offset: 1, color: '#003300' }
+                        ])
+                    }
+                }]
+            };
+            charts.portAnalysis.setOption(portOption);
+
+            // Service Distribution
+            const serviceOption = {
+                title: { text: 'Service Types', textStyle: { color: '#00ff00' } },
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'sunburst',
+                    data: Object.entries(data.service_stats).map(([name, value]) => ({
+                        name, value,
+                        itemStyle: {
+                            color: `hsl(${Math.random() * 360}, 70%, 50%)`
+                        }
+                    })),
+                    radius: ['20%', '90%'],
+                    label: { color: '#00ff00' }
+                }]
+            };
+            charts.serviceDistribution.setOption(serviceOption);
+        }
+
+        // Handle window resize
+        window.onresize = function() {
+            Object.values(charts).forEach(chart => chart.resize());
+        };
+    </script>
+</body>
+</html>

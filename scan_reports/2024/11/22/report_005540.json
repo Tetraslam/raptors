@@ -1,0 +1,9 @@
+{
+  "timestamp": "2024-11-22T00:55:40.022485Z",
+  "target": "localhost",
+  "scan_duration": 21.043516,
+  "vulnerabilities": [],
+  "open_ports": {},
+  "risk_score": 0.0,
+  "raw_data": {}
+}

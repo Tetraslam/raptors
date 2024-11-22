@@ -1,0 +1,25 @@
+{
+  "scan_id": "20241121_192852",
+  "timestamp": "2024-11-21 19:28:52.664864",
+  "target": "localhost",
+  "summary": {
+    "total_ports_scanned": 0,
+    "total_vulnerabilities": 0,
+    "risk_levels": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0
+    },
+    "scan_duration": 11.763957
+  },
+  "vulnerabilities": [],
+  "recommendations": [],
+  "raw_data": {
+    "target": "localhost",
+    "timestamp": "2024-11-21 19:28:40.898907",
+    "open_ports": {},
+    "vulnerabilities": [],
+    "scan_duration": 11.763957
+  }
+}

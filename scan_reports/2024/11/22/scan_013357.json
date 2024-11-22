@@ -1,0 +1,10 @@
+{
+  "target": "localhost",
+  "timestamp": "2024-11-22T01:33:57.382675+00:00",
+  "services": [],
+  "os_info": {},
+  "vulnerabilities": [],
+  "scan_duration": 75.058503,
+  "risk_score": 0.0,
+  "raw_data": {}
+}
