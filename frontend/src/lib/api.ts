@@ -1,6 +1,6 @@
 import { ScanReport, ScanRequest } from '@/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export async function startScan(data: ScanRequest): Promise<{ message: string }> {
   const response = await fetch(`${API_URL}/scan`, {

@@ -20,7 +20,7 @@ db_service = DatabaseService()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins since we're using Vercel's integrated deployment
+    allow_origins=["http://localhost:3000"],  # Next.js development server
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],

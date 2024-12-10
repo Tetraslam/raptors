@@ -66,6 +66,17 @@ class PortScanner:
         Scan ports on the target host using nmap
         """
         try:
+            # Sanitize host input
+            host = host.strip()  # Remove leading/trailing whitespace
+            if not host:
+                raise ValueError("Empty host provided")
+            
+            # Validate host format
+            try:
+                socket.inet_aton(host)  # Validate IPv4 address format
+            except socket.error:
+                raise ValueError(f"Invalid IP address format: {host}")
+
             logger.info(f"Starting port scan on {host} with range {port_range or 'common ports'}")
             
             # Test multiple common ports for connectivity
@@ -77,13 +88,14 @@ class PortScanner:
                     socket_test.settimeout(1)
                     result = socket_test.connect_ex((host, test_port))
                     socket_test.close()
-                    logger.info(f"Connectivity test to {host}:{test_port} result: {'Success' if result == 0 else 'Failed'}")
                     if result == 0:
                         logger.info(f"Found responsive port at {test_port}")
                         connected = True
                         break
                 except Exception as e:
                     logger.warning(f"Connectivity test failed for port {test_port}: {str(e)}")
+                finally:
+                    socket_test.close()
             
             if not connected:
                 logger.warning(f"No responsive ports found during initial test on {host}")
@@ -94,9 +106,9 @@ class PortScanner:
             
             def run_scan():
                 try:
-                    logger.info(f"Starting nmap scan on {host} with ports {port_range or 'default'}")
+                    logger.info(f"Starting nmap scan on {host} with ports {ports}")
                     args = '-sV -sS -Pn' if is_admin() else '-sV -sT -Pn'
-                    scan_result = self.nm.scan(host, port_range, arguments=args)
+                    scan_result = self.nm.scan(host, ports, arguments=args)
                     
                     if not scan_result or not scan_result.get('scan'):
                         logger.error("Nmap scan failed - no results returned")
@@ -115,12 +127,14 @@ class PortScanner:
             services: List[Service] = []
             
             try:
+                if host not in self.nm.all_hosts():
+                    raise KeyError(f"No scan results found for host {host}")
+                    
                 scan_data = self.nm[host]
                 logger.debug(f"Scan data for {host}: {scan_data}")
                 
                 if 'tcp' in scan_data:
                     for port, data in scan_data['tcp'].items():
-                        logger.debug(f"Port {port} data: {data}")
                         if data['state'] == 'open':
                             service = Service(
                                 port=port,
@@ -133,13 +147,17 @@ class PortScanner:
                 else:
                     logger.warning("No TCP ports found in scan data")
                     logger.debug(f"Available protocols: {list(scan_data.keys())}")
+
             except KeyError as e:
                 logger.error(f"Error parsing nmap results: {str(e)}")
-                raise Exception("Failed to parse nmap results")
+                raise Exception(f"Failed to parse nmap results for host {host}")
 
             logger.info(f"Scan completed. Found {len(services)} open ports/services")
             return services
 
+        except ValueError as e:
+            logger.error(f"Invalid input: {str(e)}")
+            raise
         except asyncio.TimeoutError:
             logger.error("Scan timed out")
             raise Exception("Scan timed out after 3 minutes")
