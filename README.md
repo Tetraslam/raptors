@@ -1,64 +1,56 @@
 # Raptors 🦖
 
-A powerful vulnerability scanner and dashboard that helps identify, analyze, and track system vulnerabilities in real-time.
+A real-time vulnerability scanner with AI-powered fix suggestions. Raptors scans your system for open ports, identifies potential vulnerabilities, and provides actionable remediation steps using GPT-4.
 
 ## Features
 
-- **Real-time System Scanning**: Automatically detects open ports and running services on your system
-- **Vulnerability Analysis**: Integrates with the National Vulnerability Database (NVD) to identify potential security risks
-- **AI-Powered Fix Suggestions**: Utilizes GPT-4 to provide structured, actionable fix recommendations
-- **CVSS Scoring**: Calculates and categorizes vulnerabilities based on CVSS scores into Low, Medium, and Critical risks
-- **Beautiful Dashboard**: Modern, responsive interface built with Shadcn/UI components
-- **Report Management**: Stores and manages vulnerability reports using Supabase
-- **Data Visualization**: Presents vulnerability data through intuitive and interactive visualizations
-
-## Tech Stack
-
-### Backend
-- [FastAPI](https://fastapi.tiangolo.com/) - High-performance Python web framework
-- OpenAI GPT-4 - AI-powered vulnerability analysis
-- NVD API - Vulnerability database integration
-
-### Frontend
-- [Next.js](https://nextjs.org/) - React framework
-- [Shadcn/UI](https://ui.shadcn.com/) - Beautiful UI components
-- Data visualization libraries
-
-### Database
-- [Supabase](https://supabase.com/) - Open source Firebase alternative
+- **Port Scanning**: Detects open ports and running services using Nmap
+- **Vulnerability Detection**: 
+  - Checks against common vulnerability database
+  - Integrates with National Vulnerability Database (NVD)
+  - Assigns CVSS scores and risk levels
+- **AI-Powered Analysis**: 
+  - Uses GPT-4 to analyze vulnerabilities
+  - Provides specific, actionable fix suggestions
+  - Includes immediate actions, long-term fixes, and verification steps
+- **Modern Dashboard**:
+  - Real-time scan progress updates
+  - Detailed vulnerability reports
+  - Risk level categorization
 
 ## Prerequisites
 
-- Python 3.8+
+- Python 3.9+
 - Node.js 16+
+- Nmap installed on your system
+- Administrator privileges (for certain scan features)
 - OpenAI API key
-- Supabase account and project keys
+- NVD API key (optional, improves rate limits)
 
-## Environment Variables
+## Environment Setup
 
-Create a `.env` file in the root directory with the following variables:
-
+1. Create a `.env` file in the root directory:
 ```env
 OPENAI_API_KEY=your_openai_api_key
-SUPABASE_PUBLIC_KEY=your_supabase_public_key
-SUPABASE_PRIVATE_KEY=your_supabase_private_key
+NVD_API_KEY=your_nvd_api_key  # Optional
 ```
+
+2. Install Nmap:
+   - Windows: Download from [nmap.org](https://nmap.org/download.html)
+   - Linux: `sudo apt-get install nmap`
+   - macOS: `brew install nmap`
 
 ## Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/raptors.git
-cd raptors
-```
-
-2. Install backend dependencies:
+1. Clone and set up the backend:
 ```bash
 cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. Install frontend dependencies:
+2. Set up the frontend:
 ```bash
 cd frontend
 npm install
@@ -69,7 +61,7 @@ npm install
 1. Start the backend server:
 ```bash
 cd backend
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 2. Start the frontend development server:
@@ -78,180 +70,86 @@ cd frontend
 npm run dev
 ```
 
-3. Access the dashboard at `http://localhost:3000`
+3. Open http://localhost:3000 in your browser
 
-## Usage
+## Usage Guide
 
-1. Open the Raptors dashboard in your browser
-2. Click "Start New Scan" to initiate a system vulnerability scan
-3. Wait for the scan to complete - the system will:
-   - Detect open ports and services
+### Starting a Scan
+1. Enter the target IP address (e.g., 127.0.0.1 for local system)
+2. Click "Start Scan"
+3. The scanner will:
+   - Detect open ports
+   - Identify running services
    - Check for known vulnerabilities
-   - Generate CVSS scores
-   - Provide AI-powered fix suggestions
-4. View the generated report in the dashboard with detailed visualizations
-5. Access historical reports at any time through the dashboard interface
+   - Generate AI-powered fix suggestions
 
-## API and Database Structure
+### Understanding Results
+- **Services**: List of detected open ports and running services
+- **Vulnerabilities**: 
+  - Risk Level (Critical/Medium/Low based on CVSS score)
+  - Description of the vulnerability
+  - AI-generated fix suggestions
+  - Reference links to NVD and other security resources
 
-### Supabase Schema
+### Fix Suggestions
+Each vulnerability includes:
+1. Immediate Actions
+2. Long-term Fixes
+3. Verification Steps
+4. Additional Security Measures
 
-The database schema consists of the following main tables:
+## API Endpoints
 
-#### Services Table
-- `id`: UUID (Primary Key)
-- `port`: Integer - Port number of the detected service
-- `name`: Text - Service name
-- `version`: Text - Service version (optional)
-- `protocol`: Text - Service protocol
-- `created_at`: Timestamp with timezone
+### Scan Operations
+- `POST /scan` - Start a new vulnerability scan
+  - Body: `{ "target": "127.0.0.1" }`
+- `GET /scan/{scan_id}` - Get scan status
+- `GET /reports` - List all scan reports
 
-#### Vulnerabilities Table
-- `id`: UUID (Primary Key)
-- `cve_id`: Text - CVE identifier
-- `description`: Text - Vulnerability description
-- `cvss_score`: Float - CVSS score
-- `risk_level`: Enum ('low', 'medium', 'critical')
-- `affected_versions`: Text Array - List of affected versions
-- `fix_suggestions`: Text - AI-generated fix suggestions
-- `reference_urls`: Text Array - Reference URLs
-- `created_at`: Timestamp with timezone
-
-#### Scan Reports Table
-- `id`: UUID (Primary Key)
-- `timestamp`: Timestamp - Scan execution time
-- `host`: Text - Scanned host
-- `total_vulnerabilities`: Integer
-- `risk_summary`: JSONB - Summary of vulnerabilities by risk level
-- `created_at`: Timestamp with timezone
-
-Junction tables `scan_report_services` and `scan_report_vulnerabilities` maintain many-to-many relationships between scan reports and their associated services/vulnerabilities.
-
-### API Responses
-
-#### Scan Report Response
-```json
-{
-  "id": "uuid",
-  "scan_timestamp": "ISO-8601 timestamp",
-  "host": "hostname",
-  "total_vulnerabilities": 10,
-  "risk_summary": {
-    "low": 3,
-    "medium": 5,
-    "critical": 2
-  },
-  "services": [
-    {
-      "id": "uuid",
-      "port": 80,
-      "name": "nginx",
-      "version": "1.18.0",
-      "protocol": "tcp"
-    }
-  ],
-  "vulnerabilities": [
-    {
-      "id": "uuid",
-      "cve_id": "CVE-2023-XXXX",
-      "description": "Vulnerability description",
-      "cvss_score": 7.5,
-      "risk_level": "critical",
-      "affected_versions": ["1.18.0", "1.17.0"],
-      "fix_suggestions": "Upgrade to version 1.18.1 or apply patch...",
-      "reference_urls": ["https://nvd.nist.gov/..."]
-    }
-  ]
-}
-
-## API Usage
-
-The Raptors API provides the following endpoints:
-
-### Start a Scan
-```http
-POST /scan
-Content-Type: application/json
-
-{
-    "host": "localhost",
-    "port_range": "1-65535",
-    "scan_type": "full"
+### Response Format
+```typescript
+interface ScanResponse {
+  scan_id: string;
+  services: Array<{
+    port: number;
+    name: string;
+    version: string;
+    protocol: string;
+  }>;
+  vulnerabilities: Array<{
+    cve_id: string;
+    description: string;
+    cvss_score: number;
+    risk_level: "CRITICAL" | "MEDIUM" | "LOW";
+    fix_suggestions: string;
+    reference_urls: string[];
+  }>;
 }
 ```
 
-Response:
-```json
-"Scan started successfully"
-```
+## Security Notes
 
-### Get All Reports
-```http
-GET /reports
-```
+- Run with administrator privileges for full scanning capabilities
+- The scanner performs active port scanning which may be detected by security systems
+- Some fix suggestions require system modifications - review carefully before implementing
+- Default scan is configured for common ports to balance speed and coverage
 
-Response:
-```json
-[
-    {
-        "id": "uuid",
-        "scan_timestamp": "ISO-8601 timestamp",
-        "host": "hostname",
-        "total_vulnerabilities": 10,
-        "risk_summary": {
-            "low": 3,
-            "medium": 5,
-            "critical": 2
-        },
-        "services": [...],
-        "vulnerabilities": [...]
-    }
-]
-```
+## Troubleshooting
 
-### Get Specific Report
-```http
-GET /reports/{report_id}
-```
+### Common Issues
+1. "Scanner is not running with administrator privileges"
+   - Run the application with admin rights
+   - Some scan features may be limited without admin access
 
-Response: Same as individual report object above.
+2. "No responsive ports found"
+   - Check if target system is reachable
+   - Verify no firewall is blocking the scan
 
-### Delete Report
-```http
-DELETE /reports/{report_id}
-```
+3. "Failed to parse nmap results"
+   - Ensure Nmap is properly installed
+   - Check if target IP is valid
 
-Response:
-```json
-{
-    "message": "Report deleted successfully"
-}
-```
-
-### Error Responses
-
-- `404 Not Found`: Resource not found
-- `405 Method Not Allowed`: Wrong HTTP method used
-- `500 Internal Server Error`: Server-side error
-
-## Security Features
-
-- Row Level Security (RLS) is enabled on all tables
-- Authenticated users have read-only access to all data
-- Service role has full CRUD permissions
-- All timestamps are automatically set to UTC
-- UUIDs are automatically generated for new records
-
-## Security Considerations
-
-- Ensure your `.env` file is included in `.gitignore`
-- Regularly update your API keys
-- Follow the principle of least privilege when configuring Supabase access
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Getting Help
+- Check the logs in the backend terminal for detailed error messages
+- Ensure all environment variables are properly set
+- Verify network connectivity to target system
